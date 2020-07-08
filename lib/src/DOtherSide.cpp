@@ -31,6 +31,7 @@
 #include <QtQml/QQmlContext>
 #include <QtCore>
 #include <QClipboard>
+#include <QAudioRecorder>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickImageProvider>
@@ -90,6 +91,40 @@ void dos_qguiapplication_create()
 void dos_qapplication_clipboard_setText(const char* text)
 {
     QApplication::clipboard()->setText(text);
+}
+
+QAudioRecorder *dos_qapplication_audio_recorder()
+{
+    QAudioRecorder *audioRecorder = new QAudioRecorder;
+
+    QAudioEncoderSettings audioSettings;
+    // audioSettings.setCodec("audio/amr");
+    // audioSettings.setQuality(QMultimedia::HighQuality);
+
+    audioSettings.setCodec("audio/x-flac");
+    audioSettings.setSampleRate(16000);
+    audioSettings.setQuality(QMultimedia::VeryHighQuality);
+
+    audioRecorder->setEncodingSettings(audioSettings);
+
+    // audioRecorder->setOutputLocation(QUrl::fromLocalFile("test.amr"));
+    audioRecorder->setOutputLocation(QString("./test.wav"));
+    return audioRecorder;
+}
+
+void dos_qapplication_audio_recorder_record(QAudioRecorder *audioRecorder)
+{
+    audioRecorder->record();
+}
+
+void dos_qapplication_audio_recorder_stop(QAudioRecorder *audioRecorder)
+{
+    audioRecorder->stop();
+}
+
+char *dos_qapplication_audio_recorder_error(QAudioRecorder *audioRecorder)
+{
+    return convert_to_cstring(audioRecorder->errorString());
 }
 
 void dos_qguiapplication_delete()

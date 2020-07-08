@@ -38,6 +38,7 @@
 #endif
 
 #include <DOtherSide/DOtherSideTypes.h>
+#include <QAudioRecorder>
 
 #ifdef __cplusplus
 extern "C"
@@ -80,6 +81,12 @@ DOS_API void DOS_CALL dos_qguiapplication_delete(void);
 
 
 DOS_API void dos_qapplication_clipboard_setText(const char* text);
+
+// DOS_API void *DOS_CALL dos_qapplication_audio_recorder();
+DOS_API QAudioRecorder *DOS_CALL dos_qapplication_audio_recorder(void);
+DOS_API void DOS_CALL dos_qapplication_audio_recorder_record(QAudioRecorder *audioRecorder);
+DOS_API void DOS_CALL dos_qapplication_audio_recorder_stop(QAudioRecorder *audioRecorder);
+DOS_API char *DOS_CALL dos_qapplication_audio_recorder_error(QAudioRecorder *audioRecorder);
 
 /// @}
 
