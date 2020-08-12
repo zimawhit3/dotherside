@@ -38,6 +38,9 @@
 #include <QtGui/QTextDocumentFragment>
 #include <QtCore/QFile>
 #include <QtCore/QUuid>
+#include <QAudioRecorder>
+#include <QMediaRecorder>
+#include <QAudioEncoderSettings>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickImageProvider>
@@ -1110,13 +1113,53 @@ void dos_qcoreapplication_process_events_timed(DosQEventLoopProcessEventFlag fla
     }
 
     return ncm;
-
 }
 
 void dos_qncm_delete(::DosQNetworkConfigurationManager *vptr)
 {
     auto ncm = static_cast<QNetworkConfigurationManager *>(vptr);
     delete ncm;
+}
+
+
+::DosQAudioRecorder *dos_qaudiorecorder_create(char* tmpDirPath)
+{
+    auto *recorder = new QAudioRecorder;
+    QAudioEncoderSettings audioSettings;
+    for (const auto& codec : recorder->supportedAudioCodecs())
+        qInfo() << codec;
+
+    audioSettings.setCodec("audio/mpeg, mpegversion=(int)4");
+    audioSettings.setQuality(QMultimedia::HighQuality);
+    recorder->setEncodingSettings(audioSettings);
+    auto path = tmpDirPath + QUuid::createUuid().toString(QUuid::WithoutBraces) + ".mp4";
+    recorder->setOutputLocation(QUrl(path));
+    return recorder;
+}
+
+void dos_qaudiorecorder_start(::DosQAudioRecorder *vptr)
+{
+    auto recorder = static_cast<QAudioRecorder *>(vptr);
+    recorder->record();
+}
+
+char *dos_qaudiorecorder_stop(::DosQAudioRecorder *vptr)
+{
+    auto recorder = static_cast<QAudioRecorder *>(vptr);
+    recorder->stop();
+    return convert_to_cstring(recorder->outputLocation().toString());
+}
+
+void dos_qaudiorecorder_delete(::DosQAudioRecorder *vptr)
+{
+    auto recorder = static_cast<QAudioRecorder *>(vptr);
+    delete recorder;
+}
+
+char *dos_qaudiorecorder_error(::DosQAudioRecorder *vptr)
+{
+    auto recorder = static_cast<QAudioRecorder *>(vptr);
+    return convert_to_cstring(recorder->errorString());
 }
 
 char *dos_plain_text(char* htmlString)

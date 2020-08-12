@@ -107,6 +107,12 @@ DOS_API char * DOS_CALL dos_plain_text(char* htmlString);
 
 DOS_API void DOS_CALL dos_qncm_delete(DosQNetworkConfigurationManager *vptr);
 
+DOS_API DosQAudioRecorder *DOS_CALL dos_qaudiorecorder_create(char* tmpDirPath);
+DOS_API void DOS_CALL dos_qaudiorecorder_start(DosQAudioRecorder *vptr);
+DOS_API char * DOS_CALL dos_qaudiorecorder_stop(DosQAudioRecorder *vptr);
+DOS_API char * DOS_CALL dos_qaudiorecorder_error(DosQAudioRecorder *vptr);
+DOS_API void DOS_CALL dos_qaudiorecorder_delete(DosQAudioRecorder *vptr);
+
 DOS_API char * DOS_CALL dos_image_resizer(char* imagePath, int maxSize, char* tmpDirPath);
 
 /// \brief Sets the application icon
