@@ -1129,7 +1129,7 @@ void dos_qncm_delete(::DosQNetworkConfigurationManager *vptr)
     for (const auto& codec : recorder->supportedAudioCodecs())
         qInfo() << codec;
 
-    audioSettings.setCodec("audio/mpeg, mpegversion=(int)4");
+    //audioSettings.setCodec("audio/mpeg, mpegversion=(int)4");
     audioSettings.setQuality(QMultimedia::HighQuality);
     recorder->setEncodingSettings(audioSettings);
     auto path = tmpDirPath + QUuid::createUuid().toString(QUuid::WithoutBraces) + ".mp4";
