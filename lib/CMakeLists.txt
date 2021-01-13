@@ -4,7 +4,7 @@ include(GNUInstallDirs)
 
 # Macro for merging common code between static and shared
 macro(add_target name type)
-    find_package(Qt5 COMPONENTS Core Qml Gui Quick QuickControls2 Widgets Network REQUIRED)
+    find_package(Qt5 COMPONENTS Core Qml Gui Quick QuickControls2 Widgets Network WebEngineCore WebEngineWidgets REQUIRED)
 
     add_library(${name} ${type}
         include/DOtherSide/DOtherSideTypes.h
@@ -20,6 +20,7 @@ macro(add_target name type)
         include/DOtherSide/DosIQAbstractItemModelImpl.h
         include/DOtherSide/DosQAbstractItemModel.h
         include/DOtherSide/Utils.h
+        include/DOtherSide/RequestInterceptor.h
         src/DOtherSide.cpp
         src/DosQMetaObject.cpp
         src/DosQDeclarative.cpp
@@ -28,6 +29,7 @@ macro(add_target name type)
         src/DosQObjectImpl.cpp
         src/DosQAbstractItemModel.cpp
         src/DosQQuickImageProvider.cpp
+        src/RequestInterceptor.cpp
     )
 
     if (WIN32)
@@ -38,10 +40,10 @@ macro(add_target name type)
 
     target_include_directories(${name} PUBLIC include include/Qt)
 
-    target_link_libraries(${name} PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::Quick Qt5::Network)
+    target_link_libraries(${name} PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::Quick Qt5::Network Qt5::WebEngineCore Qt5::WebEngineWidgets)
 
     # for DOtherSide.pc
-    set(PC_REQUIRES "Qt5Core, Qt5Gui, Qt5Widgets, Qt5Qml, Qt5Quick, Qt5Network, Qt5DBus")
+    set(PC_REQUIRES "Qt5Core, Qt5Gui, Qt5Widgets, Qt5Qml, Qt5Quick, Qt5Network, Qt5DBus, WebEngineCore, WebEngineWidgets")
     if (${Qt5QuickControls2_FOUND})
         target_link_libraries(${name} PRIVATE Qt5::QuickControls2)
         set(PC_REQUIRES "${PC_REQUIRES}, Qt5QuickControls2")

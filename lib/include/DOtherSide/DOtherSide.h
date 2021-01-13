@@ -933,6 +933,10 @@ DOS_API int DOS_CALL dos_qdeclarative_qmlregistertype(const QmlRegisterType *qml
 /// \note The \p qmlRegisterType is owned by the caller thus it will not be freed
 DOS_API int DOS_CALL dos_qdeclarative_qmlregistersingletontype(const QmlRegisterType *qmlRegisterType);
 
+
+
+DOS_API void DOS_CALL dos_webengineprofile_interceptor(void);
+
 /// @}
 
 #ifdef __cplusplus

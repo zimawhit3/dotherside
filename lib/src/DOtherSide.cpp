@@ -50,6 +50,8 @@
 #endif
 #include <QtWidgets/QApplication>
 
+#include "DOtherSide/RequestInterceptor.h"
+
 #include "DOtherSide/DOtherSideTypesCpp.h"
 #include "DOtherSide/DosQMetaObject.h"
 #include "DOtherSide/DosQObject.h"
@@ -97,6 +99,38 @@ QNetworkAccessManager* QMLNetworkAccessFactory::create(QObject* parent)
     manager->setCache(cache);
     return manager;
 }
+
+
+
+
+
+
+
+void dos_webengineprofile_interceptor()
+{
+    qDebug() << "SETTING REQUEST INTERCEPTOR: " << QMLNetworkAccessFactory::tmpPath ;
+
+    QWebEngineProfile* defaultProfile = QWebEngineProfile::defaultProfile();
+    RequestInterceptor * interceptor = new RequestInterceptor();
+    defaultProfile->setUrlRequestInterceptor(interceptor);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 char *convert_to_cstring(const QByteArray &array)
