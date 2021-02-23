@@ -169,6 +169,16 @@ DOS_API void DOS_CALL dos_qqmlapplicationengine_load_data(DosQQmlApplicationEngi
 /// \param data The UTF-8 string of the path to the translation file (.qm)
 DOS_API void DOS_CALL dos_qapplication_load_translation(DosQQmlApplicationEngine *vptr, const char* translationPackage);
 
+/// \brief Set a URL handler for when a URL is called
+/// \param vptr The QQmlApplicationEngine
+/// \param data The UTF-8 string of the URL
+DOS_API void DOS_CALL dos_qapplication_set_url_handler(DosQQmlApplicationEngine *vptr, const char* scheme);
+
+/// \brief Open a URL in the browser or the wanted place
+/// \param vptr The QQmlApplicationEngine
+/// \param data The UTF-8 string of the URL
+DOS_API void DOS_CALL dos_qapplication_open_url(DosQQmlApplicationEngine *vptr, const char* url);
+
 /// \brief Calls the QQmlApplicationEngine::addImportPath function
 /// \param vptr The QQmlApplicationEngine
 /// \param path The path to be added to the list of import paths

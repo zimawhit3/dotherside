@@ -45,11 +45,13 @@
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickImageProvider>
 #include <QTranslator>
+#include <QDesktopServices>
 #ifdef QT_QUICKCONTROLS2_LIB
 #include <QtQuickControls2/QQuickStyle>
 #endif
 #include <QtWidgets/QApplication>
 
+#include "DOtherSide.moc"
 #include "DOtherSide/DOtherSideTypesCpp.h"
 #include "DOtherSide/DosQMetaObject.h"
 #include "DOtherSide/DosQObject.h"
@@ -57,6 +59,7 @@
 #include "DOtherSide/DosQAbstractItemModel.h"
 #include "DOtherSide/DosQDeclarative.h"
 #include "DOtherSide/DosQQuickImageProvider.h"
+
 
 namespace {
 
@@ -97,6 +100,36 @@ QNetworkAccessManager* QMLNetworkAccessFactory::create(QObject* parent)
     manager->setCache(cache);
     return manager;
 }
+
+
+// class MyHelpHandler //: public //QObject
+// {
+//     //Q_OBJECT
+
+//     public:
+//         void openUrl(const QUrl &url);
+
+
+// };
+
+// MyHelpHandler* MyHelpHandler::openUrl(const QUrl &url)
+// {
+//     printf("GOT URL %s", url.toString());
+// }
+
+// MyHelpHandler *m_helpHandler = new MyHelpHandler();
+
+
+class MyHelpHandler: public QObject {
+  public:
+    void openUrl (const QUrl &url);
+};
+
+void MyHelpHandler::openUrl (const QUrl &url) {
+  printf("GOT URL %s\n", url.toString());
+}
+
+MyHelpHandler *m_helpHandler = new MyHelpHandler();
 
 
 char *convert_to_cstring(const QByteArray &array)
@@ -252,6 +285,17 @@ void dos_qapplication_load_translation(::DosQQmlApplicationEngine *vptr, const c
     } else {
         printf("Failed to load translation file %s\n", translationPackage);
     }
+}
+
+void dos_qapplication_set_url_handler(::DosQQmlApplicationEngine *vptr, const char* scheme)
+{
+    printf("SET URL HANDLER %s\n", scheme);
+    QDesktopServices::setUrlHandler(scheme, m_helpHandler, "openUrl");
+}
+
+void dos_qapplication_open_url(::DosQQmlApplicationEngine *vptr, const char* url)
+{
+   QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
 }
 
 void dos_qqmlapplicationengine_add_import_path(::DosQQmlApplicationEngine *vptr, const char *path)
