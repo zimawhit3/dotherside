@@ -4,6 +4,8 @@ include(GNUInstallDirs)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/SortFilterProxyModel)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/vendor/SortFilterProxyModel)
+
 target_compile_options(SortFilterProxyModel PRIVATE -fPIC)
 
 # Macro for merging common code between static and shared
@@ -11,6 +13,7 @@ macro(add_target name type)
     find_package(Qt5 COMPONENTS Core Qml Gui Quick QuickControls2 Widgets Network REQUIRED)
 
     add_library(${name} ${type}
+        $<TARGET_OBJECTS:SortFilterProxyModel> 
         include/DOtherSide/DOtherSideTypes.h
         include/DOtherSide/DOtherSideTypesCpp.h
         include/DOtherSide/DOtherSide.h
@@ -52,7 +55,7 @@ macro(add_target name type)
 
     target_include_directories(${name} PUBLIC include include/Qt)
 
-    target_link_libraries(${name} PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::Quick Qt5::Network SortFilterProxyModel)
+    target_link_libraries(${name} PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::Quick Qt5::Network)
 
     # for DOtherSide.pc
     set(PC_REQUIRES "Qt5Core, Qt5Gui, Qt5Widgets, Qt5Qml, Qt5Quick, Qt5Network, Qt5DBus")
