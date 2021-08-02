@@ -25,6 +25,9 @@ public:
         }
     }
 
+protected:
+    bool event(QEvent *e) override;
+
 signals:
     void isFullScreenChanged();
 

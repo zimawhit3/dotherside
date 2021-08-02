@@ -1,5 +1,7 @@
 #include "DOtherSide/DOtherSideStatusWindow.h"
 
+#include <QApplication>
+
 StatusWindow::StatusWindow(QWindow *parent)
 : QQuickWindow(parent),
   m_isFullScreen(false)
@@ -31,4 +33,16 @@ void StatusWindow::toggleFullScreen()
 bool StatusWindow::isFullScreen() const
 {
 	return m_isFullScreen;
+}
+
+bool StatusWindow::event(QEvent* event)
+{
+    if (event->type() == QEvent::Close)
+    {
+        event->ignore();
+        qApp->quit();
+        return true;
+    }
+
+    return QQuickWindow::event(event);
 }
