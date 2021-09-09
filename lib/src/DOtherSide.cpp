@@ -64,6 +64,7 @@
 
 #include "DOtherSide/StatusEvents/StatusDockShowAppEvent.h"
 #include "DOtherSide/StatusEvents/StatusOSThemeEvent.h"
+#include "DOtherSide/StatusEvents/StatusUrlSchemeEvent.h"
 #include "DOtherSide/StatusNotification/StatusOSNotification.h"
 
 namespace {
@@ -1363,6 +1364,11 @@ bool dos_singleinstance_isfirst(DosSingleInstance *vptr)
 {
     auto engine = static_cast<QQmlApplicationEngine*>(vptr);
     return new StatusOSThemeEvent(engine);
+}
+
+::DosStatusEventObject* dos_statusevent_create_urlSchemeEvent()
+{
+    return new StatusUrlSchemeEvent();
 }
 
 void dos_statusevent_delete(DosStatusEventObject* vptr)

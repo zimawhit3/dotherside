@@ -1000,6 +1000,7 @@ DOS_API void DOS_CALL dos_singleinstance_delete(DosSingleInstance *vptr);
 /// Status event object
 DOS_API DosStatusEventObject* dos_statusevent_create_showAppEvent(DosQQmlApplicationEngine* vptr);
 DOS_API DosStatusEventObject* dos_statusevent_create_osThemeEvent(DosQQmlApplicationEngine* vptr);
+DOS_API DosStatusEventObject* dos_statusevent_create_urlSchemeEvent();
 DOS_API void dos_statusevent_delete(DosStatusEventObject* vptr);
 
 /// Status notification object
