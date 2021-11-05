@@ -47,6 +47,7 @@
 #include <QtQuick/QQuickImageProvider>
 #include <QTranslator>
 #include <QSettings>
+#include <QJsonObject>
 #ifdef QT_QUICKCONTROLS2_LIB
 #include <QtQuickControls2/QQuickStyle>
 #endif
@@ -498,6 +499,16 @@ void dos_qqmlcontext_setcontextproperty(::DosQQmlContext *vptr, const char *name
     auto qobject = static_cast<QObject *>(value);
     auto result = new QVariant();
     result->setValue<QObject *>(qobject);
+    return result;
+}
+
+::DosQVariant *dos_qvariant_create_jsonobject(::DosJsonObject *value)
+{
+    printf("Time to convert this\n");
+    auto jsonObject = static_cast<QJsonObject *>(value);
+    printf("Got the jsonObject\n");
+    auto result = new QVariant(*jsonObject);
+    printf("Got the QVariant\n");
     return result;
 }
 

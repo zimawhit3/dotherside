@@ -362,6 +362,12 @@ DOS_API DosQVariant *DOS_CALL dos_qvariant_create_string(const char *value);
 /// \note The returned QVariant should be freed using dos_qvariant_delete()
 DOS_API DosQVariant *DOS_CALL dos_qvariant_create_qobject(DosQObject *value);
 
+/// \brief Create a new QVariant holding a QJsonbject value
+/// \return The a new QVariant
+/// \param value The QJsonbject value
+/// \note The returned QVariant should be freed using dos_qvariant_delete()
+DOS_API DosQVariant *DOS_CALL dos_qvariant_create_jsonobject(DosJsonObject *value);
+
 /// \brief Create a new QVariant with the same value of the one given as argument
 /// \return The a new QVariant
 /// \param value The QVariant to which copy its value
