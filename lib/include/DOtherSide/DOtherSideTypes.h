@@ -110,6 +110,8 @@ typedef DosQObject DosOSNotification;
 /// A pointer to a keychain manager object which is actualy a QObject
 typedef DosQObject DosKeychainManager;
 
+/// A pointer to a QTimer
+typedef void DosQTimer;
 
 /// A pixmap callback to be supplied to an image provider
 /// \param id Image source id

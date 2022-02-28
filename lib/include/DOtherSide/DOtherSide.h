@@ -1013,6 +1013,17 @@ DOS_API void dos_qsettings_delete(DosQSettings* vptr);
 
 #pragma endregion
 
+#pragma region QTimer
+
+DOS_API DosQTimer* dos_qtimer_create(void);
+DOS_API void dos_qtimer_delete(DosQTimer* vptr);
+DOS_API void dos_qtimer_start(DosQTimer* vptr, int msec);
+DOS_API void dos_qtimer_stop(DosQTimer* vptr);
+DOS_API void dos_qtimer_set_interval(DosQTimer* vptr, int msec);
+DOS_API bool dos_qtimer_is_active(DosQTimer* vptr);
+
+#pragma endregion
+
 #pragma region KeychainManager exposed methods
 
 DOS_API DosKeychainManager* dos_keychainmanager_create(const char* service, 

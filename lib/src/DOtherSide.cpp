@@ -49,6 +49,7 @@
 #include <QtQuick/QQuickImageProvider>
 #include <QTranslator>
 #include <QSettings>
+#include <QTimer>
 #ifdef QT_QUICKCONTROLS2_LIB
 #include <QtQuickControls2/QQuickStyle>
 #endif
@@ -1440,6 +1441,59 @@ void dos_qsettings_delete(DosQSettings* vptr)
         qobject->deleteLater();
 }
 #pragma endregion
+
+#pragma region QTimer
+
+DosQTimer* dos_qtimer_create(void)
+{
+    return new QTimer();
+}
+
+void dos_qtimer_delete(DosQTimer* vptr)
+{
+    auto qobject = static_cast<QObject*>(vptr);
+    if (qobject)
+        qobject->deleteLater();
+}
+
+void dos_qtimer_start(DosQTimer* vptr, int msec)
+{
+    auto timer = static_cast<QTimer*>(vptr);
+    if (timer)
+    {
+        timer->start(msec);
+    }
+}
+
+void dos_qtimer_stop(DosQTimer* vptr)
+{
+    auto timer = static_cast<QTimer*>(vptr);
+    if (timer)
+    {
+        timer->stop();
+    }
+}
+
+void dos_qtimer_set_interval(DosQTimer* vptr, int msec)
+{
+    auto timer = static_cast<QTimer*>(vptr);
+    if (timer)
+    {
+        timer->setInterval(msec);
+    }
+}
+
+bool dos_qtimer_is_active(DosQTimer* vptr)
+{
+    auto timer = static_cast<QTimer*>(vptr);
+    if (timer)
+    {
+        return timer->isActive();
+    }
+    return false;
+}
+#pragma endregion
+
 
 #pragma region KeychainManager
 DosKeychainManager* dos_keychainmanager_create(const char* service, 
